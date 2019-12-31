@@ -1,4 +1,4 @@
-package com.example.todolist.ui.tools
+package com.example.todolist.ui.task
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.todolist.R
 
-class ToolsFragment : Fragment() {
+class TaskFragment : Fragment() {
 
-    private lateinit var toolsViewModel: ToolsViewModel
+    private lateinit var taskViewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel =
-                ViewModelProviders.of(this).get(ToolsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_tools, container, false)
-        val textView: TextView = root.findViewById(R.id.text_tools)
-        toolsViewModel.text.observe(this, Observer {
+        taskViewModel =
+                ViewModelProviders.of(this).get(TaskViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_task, container, false)
+        val textView: TextView = root.findViewById(R.id.text_home)
+        taskViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root
