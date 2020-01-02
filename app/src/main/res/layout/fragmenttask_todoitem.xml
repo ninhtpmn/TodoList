@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.todolist.TodoData" />
+
+        <variable
+            name="data"
+            type="TodoData" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp">
+
+            <TextView
+                android:id="@+id/tv_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{data.note}"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                tools:text="Note sss" />
+
+            <TextView
+                android:id="@+id/tv_date_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_note"
+                android:layout_marginTop="5dp"
+                android:text="@{data.dateTime}"
+                tools:text="Dec 31, 2019 11:29 AM" />
+
+            <TextView
+                android:id="@+id/tv_alarm_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_date_time"
+                android:layout_marginTop="5dp"
+                android:text="@{data.alarmTime}"
+                tools:text="Dec 31, 2019 11:35 PM" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
