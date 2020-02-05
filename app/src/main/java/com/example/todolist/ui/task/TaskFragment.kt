@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.todolist.R
 import com.example.todolist.TodoData
 import com.example.todolist.autoCleared
@@ -24,7 +26,7 @@ class TaskFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        taskViewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
+        taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_task,
@@ -41,6 +43,10 @@ class TaskFragment : Fragment() {
             binding.loading = true
             taskViewModel.refresh()
         }
+        binding.onClickListener = View.OnClickListener {
+            addNewTask()
+            Toast.makeText(context, "Add $it", Toast.LENGTH_LONG).show()
+        }
         taskViewModel.data.observe(viewLifecycleOwner, Observer {
             println("-------------->>" + it)
             binding.loading = false
@@ -48,13 +54,17 @@ class TaskFragment : Fragment() {
         })
     }
 
+    private fun addNewTask() {
+        findNavController().navigate(R.id.action_nav_home_to_newTaskFragment)
+    }
+
     private fun initRecyclerView() {
-        val tododata1 = TodoData("One", "Dec 1, 2019 11:29 AM" , "Dec 1, 2019 11:35 PM")
-        val tododata2 = TodoData("Two", "Dec 2, 2019 11:29 AM" , "Dec 2, 2019 11:35 PM")
-        val tododata3 = TodoData("Three", "Dec 3, 2019 11:29 AM" , "Dec 3, 2019 11:35 PM")
-        val tododata4 = TodoData("Four", "Dec 4, 2019 11:29 AM" , "Dec 4, 2019 11:35 PM")
-        val tododata5 = TodoData("Five", "Dec 5, 2019 11:29 AM" , "Dec 5, 2019 11:35 PM")
-        val data : List<TodoData> = listOf(tododata1, tododata2, tododata3, tododata4, tododata5)
+        val tododata1 = TodoData("One", "Dec 1, 2019 11:29 AM", "Dec 1, 2019 11:35 PM")
+        val tododata2 = TodoData("Two", "Dec 2, 2019 11:29 AM", "Dec 2, 2019 11:35 PM")
+        val tododata3 = TodoData("Three", "Dec 3, 2019 11:29 AM", "Dec 3, 2019 11:35 PM")
+        val tododata4 = TodoData("Four", "Dec 4, 2019 11:29 AM", "Dec 4, 2019 11:35 PM")
+        val tododata5 = TodoData("Five", "Dec 5, 2019 11:29 AM", "Dec 5, 2019 11:35 PM")
+        val data: List<TodoData> = listOf(tododata1, tododata2, tododata3, tododata4, tododata5)
         rvAdapter = TodoAdapter(requireContext(), data)
         binding.rvTodo.adapter = rvAdapter
     }
